@@ -108,7 +108,6 @@ int mount(disk *diskptr)
 		printf("Disk pointer is empty\n");
 		return -1;
 	}
-/////////////////////////////////////////////////////////////////////////////////////////////why NULL (if not verified)
 	mounted_diskptr = NULL;
 	mounted_sb = NULL;
 	
@@ -143,7 +142,6 @@ uint32_t get_free_bitmap_idx(disk *diskptr,uint32_t s,uint32_t len,uint32_t max_
 		// SHOULD BE 1024
 		for(int j=0;j<1024;j++)
 		{
-			/////////////////////////////////////////////////////////////////////////////doubt
 			for(int k=0;k<32 && cur_count<max_count;k++,cur_count++)
 			{
 				if(!TestBit(buf[j],k))
@@ -185,8 +183,6 @@ int create_file()
 	void *buff = malloc(BLOCKSIZE*sizeof(char));
 	
 	uint32_t free_bitmap_idx = get_free_bitmap_idx(diskptr,sb->inode_bitmap_block_idx,sb->inode_blocks,sb->inodes);
-
-///////////////////////////////////////////////////////////////////check free_bitmap_idx = -1
 
 	// update the inode at the given index
 	int block_offset = free_bitmap_idx/128;
@@ -322,8 +318,7 @@ int read_i(int inumber, char *data, int length, int offset)
     }
     return read_bytes;
 }
-/////////////////////////////////////////////////////////////////////If length is out of range, read only till the end of
-// the file and return the length of the data read (in bytes)
+
 int write_inode(int inumber, inode* in)
 {
     char buff[BLOCKSIZE];
@@ -379,7 +374,7 @@ int write_i(int inumber, char *data, int length, int offset)
 
 			new_entry = get_free_bitmap_idx(diskptr,sb->data_block_bitmap_idx,sb->inode_block_idx-sb->data_block_bitmap_idx,sb->data_blocks);
 			ret = (new_entry == -1);
-			printf("Got new fd for data block :%d\n",new_entry);
+			// printf("Got new fd for data block :%d\n",new_entry);
 			if(new_entry == -1)
 				return -1;
     	}
